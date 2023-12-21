@@ -27,22 +27,22 @@ class TicketInput(BaseModel):
 @app.post("/predict_price/")
 def predict_price(ticket: TicketInput):
     #Convert input data into a format that the model expects
-    data =  [model_1['airline'].transform([ticket['airline']])[0],
-        model_1['source_city'].transform([ticket['source_city']])[0],
-        model_1['departure_time'].transform([ticket['departure_time']])[0],
-        model_1['stops'].transform([ticket['stops']])[0],
-        model_1['destination_city'].transform([ticket['destination_city']])[0],
-        model_1['class_x'].transform([ticket['class_x']])[0],        
-        ticket['days_left']
+    data =  [model_1['airline'].transform([ticket.airline])[0],
+        model_1['source_city'].transform([ticket.source_city])[0],
+        model_1['departure_time'].transform([ticket.departure_time])[0],
+        model_1['stops'].transform([ticket.stops])[0],
+        model_1['destination_city'].transform([ticket.destination_city])[0],
+        model_1['class_x'].transform([ticket.class_x])[0],        
+        ticket.days_left
     ]
-    print("here")
-    #data= model_1.transform(data)
+    
+    
     # Use the model for prediction
-    # predicted_price = model.predict([data])[0]  # Assuming the model is ready for predictions
-
+    predicted_price = model.predict([data])[0]  # Assuming the model is ready for predictions
+    print(predicted_price)
     # Return the predicted price
     #return {"predicted_price": predicted_price}
-    return {"Hello": "World"}
+    return {"prediction": predicted_price}
 
 @app.get("/")
 def read_root():
